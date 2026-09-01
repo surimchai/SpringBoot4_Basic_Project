@@ -8,10 +8,11 @@ import org.springframework.context.annotation.Profile;
 @Profile("prod")
 public class ProdConfig {
     @Bean
-    public CustomVO CustomVO(){
+    public CustomVO customVO() {
         return CustomVO.builder()
                 .mode("운영 환경")
                 .rate(1.5)
                 .build();
     }
+
 }

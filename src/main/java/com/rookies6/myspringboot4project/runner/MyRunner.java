@@ -2,6 +2,8 @@ package com.rookies6.myspringboot4project.runner;
 
 import com.rookies6.myspringboot4project.config.CustomVO;
 import com.rookies6.myspringboot4project.property.MyBootProperties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
@@ -31,10 +33,13 @@ public class MyRunner implements ApplicationRunner {
     @Autowired
     private CustomVO customVO;
 
+    private Logger logger = LoggerFactory.getLogger(MyRunner.class);
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        System.out.println("MyRunner run() 호출됨!!");
-        System.out.println("Application Name = " + applicationName);
+        logger.info("Logger 구현체 클래스명 {}", logger.getClass().getName());
+        logger.debug("MyRunner run() 호출됨!!");
+        logger.debug("Application Name = {}", applicationName);
 
         //Consumer 인터페이스를 Anonymous Inner Class 로 표현
         args.getOptionNames().forEach(new Consumer<String>() {
@@ -53,15 +58,15 @@ public class MyRunner implements ApplicationRunner {
         //Consumer 인터페이스를 Method Reference 로 표현
         args.getOptionNames().forEach(System.out::println);
 
-        System.out.println("${myboot.name} = " + name);
-        System.out.println("${myboot.age} = " + age);
-        System.out.println("${myboot.fullName} = " + environment.getProperty("myboot.fullName"));
+        logger.debug("${myboot.name} = {}", name);
+        logger.debug("${myboot.age} = {}", age);
+        logger.debug("${myboot.fullName} = {}", environment.getProperty("myboot.fullName"));
 
-        System.out.println("MyBootProperties getName() = " + properties.getName());
-        System.out.println("MyBootProperties getAge() = " + properties.getAge());
-        System.out.println("MyBootProperties getFullName() = " + properties.getFullName());
+        logger.info("MyBootProperties getName() = {}", properties.getName());
+        logger.info("MyBootProperties getAge() = {}", properties.getAge());
+        logger.info("MyBootProperties getFullName() = {}", properties.getFullName());
 
-        System.out.println("현재 활성화 되어있는 CustomVO= " + customVO);
+        logger.debug("현재 활성화 되어있는 CustomVO= {}", customVO);
 
 
     }
