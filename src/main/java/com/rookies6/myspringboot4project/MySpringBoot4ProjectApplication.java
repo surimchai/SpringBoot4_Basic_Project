@@ -12,10 +12,10 @@ public class MySpringBoot4ProjectApplication {
         //SpringApplication.run(MySpringBoot4ProjectApplication.class, args);
         SpringApplication application = new SpringApplication(MySpringBoot4ProjectApplication.class);
         //WebApplication type 변경
-        application.setWebApplicationType(WebApplicationType.NONE);
+        //자동으로 AnnotationConfigServletWebServerApplicationContext 컨테이너 객체가 생성됨
+        application.setWebApplicationType(WebApplicationType.SERVLET);
         application.run(args);
     }
-
 
     @Bean
     public String myBean() {
