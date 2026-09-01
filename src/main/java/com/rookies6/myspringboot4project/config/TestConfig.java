@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Profile;
 //@Profile("test")
 public class TestConfig {
     @Bean
-    public CustomVO customerVO() {
+    public CustomVO CustomVO() {
         return CustomVO.builder() //CustomerVOBuilder
                 .mode("테스트 환경")
                 .rate(0.5)

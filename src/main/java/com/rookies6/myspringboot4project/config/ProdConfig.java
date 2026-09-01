@@ -12,6 +12,6 @@ public class ProdConfig {
         return CustomVO.builder()
                 .mode("운영 환경")
                 .rate(1.5)
-                .build;
+                .build();
     }
 }
