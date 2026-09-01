@@ -3,12 +3,15 @@ package com.rookies6.myspringboot4project.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "customers")
 @Getter @Setter
 public class Customer {
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
@@ -16,4 +19,10 @@ public class Customer {
 
     @Column(nullable = false)
     private String customerName;
+
+    @Column(nullable = false, updatable = false)
+    @CreationTimestamp
+    private LocalDateTime createAt = LocalDateTime.now();
+
+
 }
