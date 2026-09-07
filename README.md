@@ -1,9 +1,10 @@
 ## SpringBoot 와 JPA 활용
-* Student 단일 Entity
+* Student 와 StudentDetail 엔티티
+    * 1:1 매핑 연관관계
 * Entity, Repository
 * Service
-  * @Transactional
-  * Java8 Stream API 사용
+    * @Transactional,
+    * Java8 Stream API 사용
 * DTO(Dta Transfer Object)
 * RestController
 * Validation
