@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional(readOnly = true)
 public class BookService {
 
     private final BookRepository bookRepository;
@@ -21,10 +22,9 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-
+    @Transactional
     public BookDTO.BookResponse createBook(BookDTO.BookCreateRequest request) {
 
-        // ① CreateRequest DTO → Book Entity로 변환
         Book book = new Book();
 
         book.setTitle(request.getTitle());
@@ -33,10 +33,8 @@ public class BookService {
         book.setPrice(request.getPrice());
         book.setPublishDate(request.getPublishDate());
 
-        // ② DB 저장
         Book savedBook = bookRepository.save(book);
 
-        // ③ 저장된 Entity → BookResponse로 변환
         BookDTO.BookResponse response = new BookDTO.BookResponse();
 
         response.setId(savedBook.getId());
@@ -51,10 +49,8 @@ public class BookService {
 
     public List<BookDTO.BookResponse> getAllBooks() {
 
-        // ① DB에서 모든 Book 조회
         List<Book> books = bookRepository.findAll();
 
-        // ② List<Book> → List<BookResponse>
         return books.stream()
                 .map(book -> {
                     BookDTO.BookResponse response = new BookDTO.BookResponse();
@@ -73,13 +69,11 @@ public class BookService {
 
     public BookDTO.BookResponse getBookById(Long id) {
 
-        // ① id로 Book 한 권 조회
         Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new BusinessException(
                         ErrorCode.RESOURCE_NOT_FOUND, "Book", "id", id
                 ));
 
-        // ② Book → BookResponse 변환
         BookDTO.BookResponse response = new BookDTO.BookResponse();
 
         response.setId(book.getId());
@@ -94,16 +88,13 @@ public class BookService {
 
     public BookDTO.BookResponse getBookByIsbn(String isbn) {
 
-        // ① ISBN으로 조회
         Book book = bookRepository.findByIsbn(isbn);
 
-        // ② 조회 결과가 없으면 예외
         if (book == null) {
             throw new BusinessException(
                     ErrorCode.RESOURCE_NOT_FOUND, "Book", "isbn", isbn);
         }
 
-        // ③ Book → BookResponse 변환
         BookDTO.BookResponse response = new BookDTO.BookResponse();
 
         response.setId(book.getId());
@@ -119,11 +110,9 @@ public class BookService {
     @Transactional
     public BookDTO.BookResponse updateBook(Long id, BookDTO.BookUpdateRequest request) {
 
-        // ① 수정할 Book 찾기
         Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new BusinessException(ErrorCode.RESOURCE_NOT_FOUND, "Book", "id", id));
 
-        // ② 요청으로 들어온 값만 수정
         if (request.getTitle() != null) {
             book.setTitle(request.getTitle());
         }
@@ -140,11 +129,8 @@ public class BookService {
             book.setPublishDate(request.getPublishDate());
         }
 
-        // ③ 저장
         Book updatedBook = bookRepository.save(book);
 
-        // TODO ④ updatedBook → BookResponse 변환
-        // ④ updatedBook → BookResponse 변환
         BookDTO.BookResponse response = new BookDTO.BookResponse();
 
         response.setId(updatedBook.getId());
@@ -160,7 +146,6 @@ public class BookService {
     @Transactional
     public void deleteBook(Long id) {
 
-        // ① 삭제할 Book이 존재하는지 확인
         if (!bookRepository.existsById(id)) {
             throw new BusinessException(
                     ErrorCode.RESOURCE_NOT_FOUND,
@@ -168,7 +153,6 @@ public class BookService {
             );
         }
 
-        // ② 삭제
         bookRepository.deleteById(id);
     }
 }
