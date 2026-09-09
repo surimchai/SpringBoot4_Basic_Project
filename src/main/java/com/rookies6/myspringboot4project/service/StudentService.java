@@ -161,7 +161,7 @@ public class StudentService {
     }
 
     @Transactional
-    public StudentDTO.Response updateStudent_Org(Long id, StudentDTO.Request request) {
+    public StudentDTO.Response updateStudent_org(Long id, StudentDTO.Request request) {
         // Find the student
         Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new BusinessException(ErrorCode.RESOURCE_NOT_FOUND,
