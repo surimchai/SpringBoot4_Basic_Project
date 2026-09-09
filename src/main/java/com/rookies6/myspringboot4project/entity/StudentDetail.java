@@ -21,10 +21,10 @@ public class StudentDetail {
     @Column(name = "student_detail_id")
     private Long id;
 
-    @Column(nullable = false)
+    @Column
     private String address;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String phoneNumber;
 
     @Column(nullable = false, unique = true)
