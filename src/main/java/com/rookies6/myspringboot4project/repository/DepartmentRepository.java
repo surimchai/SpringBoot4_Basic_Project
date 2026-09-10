@@ -21,7 +21,8 @@ public interface DepartmentRepository extends JpaRepository<Department, Long> {
             + "FROM Department d LEFT JOIN d.students s "
             + "GROUP BY d.id, d.name, d.code ORDER BY d.id")
     List<DepartmentSummary> findAllSummaries();
-    
+
+    // 학과의 PK로 조회
     //학생의 studentDetail 까지 함께 가져온다.
     //Student.studentDetail 은 mappedBy 쪽 @OneToOne 이라 LAZY 가 동작하지 않고,
     //학생 수만큼 상세정보 조회 쿼리가 추가로 발생하므로 여기서 함께 조회한다.
