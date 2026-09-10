@@ -30,4 +30,15 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     @Query("SELECT s FROM Student s LEFT JOIN FETCH s.studentDetail")
     List<Student> findAllWithStudentDetail();
 
+    //////////////////////// Department 추가 후
+    //학과별 학생 목록도 상세정보/학과를 함께 조회한다
+    @Query("SELECT s FROM Student s "
+            + "LEFT JOIN FETCH s.studentDetail "
+            + "LEFT JOIN FETCH s.department "
+            + "WHERE s.department.id = :departmentId")
+    List<Student> findByDepartmentId(@Param("departmentId") Long departmentId);
+
+    //학과별 학생 수 ( 학과 하나를 대상으로 할 때 사용 )
+    @Query("SELECT COUNT(s) FROM Student s WHERE s.department.id = :departmentId")
+    Long countByDepartmentId(@Param("departmentId") Long departmentId);
 }
