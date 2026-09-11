@@ -11,7 +11,6 @@ import java.time.LocalDate;
 @Setter
 public class Book {
 
-    // TODO: PK
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,4 +23,11 @@ public class Book {
 
     private LocalDate publishDate;
     private Integer price;
+
+    // Book ↔ BookDetail 양방향 1:1 관계
+    @OneToOne(
+            mappedBy = "book",
+            cascade = CascadeType.ALL
+    )
+    private BookDetail bookDetail;
 }
